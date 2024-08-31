@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+  <article data-theme="dark">
+      <h2>Meus Pedidos</h2>
+      <ul>
+        {% for pedido in pedidos %}
+          <li>
+            Pedido #{{ pedido.id }} - Data: {{ pedido.criado }} - Status: {{ pedido.get_status }}
+            <a href="{% url 'detalhes_pedido' pedido.id %}" class="button">Ver Pedido</a>
+          </li>
+        {% empty %}
+          <li>Você ainda não fez nenhum pedido.</li>
+        {% endfor %}
+      </ul>
+  </article>
+{% endblock %}

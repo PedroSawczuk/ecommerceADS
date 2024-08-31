@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+  <article data-theme="dark">
+      <h2>Detalhes do Pedido #{{ pedido.indice }}</h2>
+      <p>Data do Pedido: {{ pedido.criado }}</p>
+      <p>Status: {{ pedido.pago|yesno:"Pago,Não Pago" }}</p>
+
+      <h3>Produtos:</h3>
+      <ul>
+        {% for item in pedido.itens_pedido.all %}
+          <li>
+            Produto: {{ item.produto.nome }} - Quantidade: {{ item.quantidade }} - Valor: R$ {{ item.preco|floatformat:2 }} - Total: R$ {{ item.get_custo|floatformat:2 }}
+          </li>
+        {% empty %}
+          <li>Não há produtos neste pedido.</li>
+        {% endfor %}
+      </ul>
+
+      <p>Total da Compra: R$ {{ pedido.get_total_formatado }}</p>
+
+      <p>
+        <a href="{% url 'listar_pedidos' %}" class="button">Voltar para Lista de Pedidos</a>
+        {% if not pedido.pago %}
+          <a href="{% url 'pagar_pedido' pedido.id %}" class="button">Pagar Pedido</a>
+        {% endif %}
+        <a href="{% url 'excluir_pedido' pedido.id %}" class="button" onclick="return confirm('Tem certeza que deseja excluir este pedido?');">Excluir Pedido</a>
+      </p>
+  </article>
+{% endblock %}

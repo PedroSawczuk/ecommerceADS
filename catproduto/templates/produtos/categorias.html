@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Meu Ecommerce - Categorias {% endblock %}
+
+{% block conteudo %}
+<article data-theme="dark">
+    {% for c in categorias %}
+    <a href="{% url 'listcategorias' c.slug %}" role="button" class="outline">
+        {{ c.nome }}
+    </a>
+    {% empty %}
+    <a href="{% url 'home' %}" role="button" class="outline">
+        Voltar
+    </a>
+    {% endfor %}
+    <a href="{% url 'listallprod' %}" role="button" class="outline">Todos</a>
+</article>
+<article >
+            <h2>
+                Produtos - Categoria
+                {% if categoria %}
+                    {{ categoria.nome }}
+                {% else %}
+                    Geral
+                {% endif %}
+            </h2>
+            <table class="striped">
+                <thead>
+                <tr>
+                    <th>Imagem</th> <th>Nome</th> <th>Preço</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for p in produtos %}
+                <tr>
+                    <td>
+                        <a href="{% url 'detalheproduto' p.slug p.id %}">
+                        <img width="520" src="{% if p.imagem %} {{p.imagem.url}}
+                                  {% else %} {% static 'imagens/notfound.jfif' %}
+                                  {% endif %}" alt="imagem de {{ p.nome }}">
+                        </a>
+                    </td>
+                    <td><a href="{% url 'detalheproduto' p.slug p.id %}">{{ p.nome }}</a></td>
+                    <td>{{ p.preco }}</td>
+                </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">Não existem produtos</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </article>
+{% endblock %}

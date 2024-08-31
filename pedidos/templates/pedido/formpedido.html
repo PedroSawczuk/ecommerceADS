@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block conteudo %}
+  <article data-theme="dark">
+      <h3>Seu Pedido:</h3>
+      <ul>
+          {% for item in carrinho %}
+          <li>
+              {{ item.quantidade }} => {{ item.produto.nome }}
+              <span>R${{ item.preco_total }}</span>
+          </li>
+          {% endfor %}
+      </ul>
+      <p>Total: R${{ carrinho.get_preco_total }}</p>
+      <form method="post">
+          {% csrf_token %}
+          {{ form }}
+          <input type="submit" role="button" class="light" value="Finalizar Pedido">
+      </form>
+  </article>
+{% endblock %}

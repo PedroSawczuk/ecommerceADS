@@ -1,0 +1,7 @@
+{% extends 'base.html' %} {% block conteudo %}
+<article data-theme="dark">
+  <h2>Perfil do Usuário</h2>
+  <p>Olá, {{ user.username }}!</p>
+  <a href="{% url 'listar_pedidos' %}" class="button">Ver Pedidos</a>
+</article>
+{% endblock %}

@@ -1,0 +1,13 @@
+<!-- pedidos/templates/pedido/confirmar_pagamento.html -->
+{% extends 'base.html' %}
+{% block conteudo %}
+  <article data-theme="dark">
+      <h2>Confirmar Pagamento</h2>
+      <p>Você tem certeza que deseja marcar o pedido #{{ object.id }} como pago?</p>
+      <form method="post">
+          {% csrf_token %}
+          <button type="submit" class="button">Confirmar Pagamento</button>
+          <a href="{% url 'detalhes_pedido' object.id %}" class="button">Cancelar</a>
+      </form>
+  </article>
+{% endblock %}

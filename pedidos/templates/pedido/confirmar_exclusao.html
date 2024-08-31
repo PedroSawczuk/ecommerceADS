@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+  <article data-theme="dark">
+      <h2>Confirmar Exclusão</h2>
+      <p>Você tem certeza de que deseja excluir o pedido #{{ object.indice }}?</p>
+      <form method="post">
+          {% csrf_token %}
+          <button type="submit" class="button">Confirmar Exclusão</button>
+          <a href="{% url 'listar_pedidos' %}" class="button">Cancelar</a>
+      </form>
+  </article>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+    <article>
+        <h1>Obrigado por comprar conosco</h1>
+        <table>
+            <thead data-theme="dark">
+                <tr>
+                    <th>Imagem</th>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Preço unitário</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in pedido.itens_pedido.all %}
+               {% with prod=item.produto %}
+                <tr>
+                    <td>
+                       <a href="{% url 'detalheproduto' prod.slug prod.id %}">
+                           <img src="{% if prod.imagem %} {{ prod.imagem.url }}
+                                     {% else %} {% static 'imagens/notfound.jfif' %}
+                                     {% endif %}"
+                                alt="imagem do produto {{ prod.nome }}"
+                                width="90" height="100">
+                       </a>
+                    </td>
+                    <td>{{ prod.nome }}</td>
+                    <td>
+                        {{ item.quantidade }}
+                    </td>
+                    <td>R$ {{ item.preco }}</td>
+                    <td>R$ {{ item.get_custo }}</td>
+                </tr>
+               {% endwith %}
+            {% endfor %}
+            <tr>
+                <td colspan="4">Total Geral</td>
+                <td colspan="2">R$ {{ pedido.get_total }}</td>
+            </tr>
+            </tbody>
+        </table>
+        <a href="{% url 'listallprod' %}" role="button" class="secondary">
+            Continuar comprando...
+        </a>
+        <a href="{% url 'pagar_pedido' pedido.pk %}" role="button" class="primary">
+            Efetuar pagamento
+        </a>
+
+    </article>
+{% endblock %}
